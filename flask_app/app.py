@@ -11,7 +11,7 @@ import os
 app = Flask(__name__)
 
 from users.routes import users
-from site.routes import site
+from siteview.routes import site
 
 # load config
 app.config.from_pyfile("config.py", silent=False)
@@ -31,7 +31,8 @@ app.register_blueprint(site)
 
 login_manager.login_view = "users.login"
 
-
+if __name__ == "__main__":
+    app.run()
 
 
     # Test commit vs code to github

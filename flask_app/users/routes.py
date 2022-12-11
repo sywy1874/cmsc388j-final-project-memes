@@ -6,7 +6,7 @@ users = Blueprint("users", __name__)
 
 @users.route("/register", methods=["GET", "POST"])
 def register():
-    pass
+    return '<h1>REGISTRATION PAGE</h1>'
 
 
 @users.route("/login", methods=["GET", "POST"])
