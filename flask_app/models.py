@@ -17,7 +17,7 @@ class User(db.Document, UserMixin):
 class Meme(db.Document):
     poster = db.ReferenceField(User, required=True)
     title = db.StringField(required=True)
-    meme_upload = db.ImageField(required=True)
+    meme_upload = db.FileField(required=True)
     post_id = db.IntegerField(required=True, unique=True)
     categories = db.ListField(db.StringField())
 
