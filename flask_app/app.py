@@ -17,13 +17,9 @@ from siteview.routes import site
 app.config.from_pyfile("config.py", silent=False)
 
 # load Flask Mongo, Flask LoginManager, and BCrypt
-db = MongoEngine()
-login_manager = LoginManager()
-bcrypt = Bcrypt()
-
-db.init_app(app)
-login_manager.init_app(app)
-bcrypt.init_app(app)
+db = MongoEngine(app)
+login_manager = LoginManager(app)
+bcrypt = Bcrypt(app)
 
 # Register blueprints
 app.register_blueprint(users)

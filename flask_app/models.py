@@ -12,3 +12,17 @@ class User(db.Document, UserMixin):
     username = db.StringField(required=True, unique=True)
     email = db.EmailField(required=True, unique=True)
     password = db.StringField(required=True)
+
+
+class Meme(db.Document):
+    poster = db.ReferenceField(User, required=True)
+    title = db.StringField(required=True)
+    meme_upload = db.ImageField(required=True)
+    post_id = db.IntegerField(required=True, unique=True)
+    categories = db.ListField(db.StringField())
+
+
+class CommentFor(db.Document):
+    for_post = db.ReferenceField(Meme, required=True)
+    commenter = db.ReferenceField(User, required=True)
+    text = db.StringField(required=True)
