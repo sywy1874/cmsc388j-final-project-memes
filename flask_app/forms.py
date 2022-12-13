@@ -2,7 +2,7 @@ from flask_login import current_user
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from werkzeug.utils import secure_filename
-from wtforms import StringField, IntegerField, SubmitField, TextAreaField, PasswordField, SelectField
+from wtforms import StringField, IntegerField, SubmitField, TextAreaField, PasswordField, SelectField, RadioField
 from wtforms.validators import (
     InputRequired,
     DataRequired,
@@ -13,7 +13,8 @@ from wtforms.validators import (
     ValidationError,
 )
 
-from models import User
+# local imports
+from .models import User
 
 
 class RegistrationForm(FlaskForm):
@@ -50,6 +51,18 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Login")
 
 
+class SearchForm(FlaskForm):
+    query = StringField(
+        "Search for something...", validators=[InputRequired(), Length(min=4, max=100)]
+    )
+
+    usr_or_post = RadioField(
+        "Categories", choices=[('users', 'Users'), ('memes', 'Memes')]
+    )
+
+    submit = SubmitField("Search")
+
+
 class CommentForm(FlaskForm):
     text = TextAreaField(
         "Comment", validators=[InputRequired(), Length(min=5, max=500)]
@@ -59,11 +72,12 @@ class CommentForm(FlaskForm):
 
 class NewPost(FlaskForm):
     title = StringField(
-        "Title", validators=[InputRequired(), Length(min=1, max=100)]
+        "Title", validators=[InputRequired(), Length(min=5, max=100)]
     )
 
     meme = FileField(
-        "Upload Meme", validators=[FileRequired(), FileAllowed(['png', 'jpg', 'jpeg', 'gif', 'mp4'])]
+        "Upload Meme", validators=[FileRequired(), FileAllowed(['png', 'jpg', 'gif'],
+                                                               "Only .png, .jpg, and .gif are supported")]
     )
 
     categories = SelectField(
@@ -71,4 +85,12 @@ class NewPost(FlaskForm):
     )
 
     submit = SubmitField("Submit Meme!")
+
+    def validate_meme(self, meme):
+        # max 16 MB
+        max_size = 1024 * 1024 * 16
+        if len(meme.data.read()) > max_size:
+            raise ValidationError(f"Meme must be less than 16 MB.")
+
+        meme.data.seek(0, 0)
 

@@ -1,6 +1,6 @@
 from flask_login import UserMixin
 from datetime import datetime
-from app import db, login_manager
+from . import db, login_manager
 
 
 @login_manager.user_loader
@@ -17,12 +17,12 @@ class User(db.Document, UserMixin):
 class Meme(db.Document):
     poster = db.ReferenceField(User, required=True)
     title = db.StringField(required=True)
-    meme_upload = db.ImageField(required=True)
-    post_id = db.IntegerField(required=True, unique=True)
+    meme_upload = db.ImageField(size=(1280, 720, True), required=True)
+    meme_id = db.IntField(required=True)
     categories = db.ListField(db.StringField())
 
 
-class CommentFor(db.Document):
+class Comment(db.Document):
     for_post = db.ReferenceField(Meme, required=True)
     commenter = db.ReferenceField(User, required=True)
     text = db.StringField(required=True)

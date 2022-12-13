@@ -1,7 +1,7 @@
-from flask import Blueprint, redirect, url_for, render_template, flash, request
+from flask import Blueprint, redirect, url_for, render_template, flash
 from flask_login import current_user, login_required, login_user, logout_user
 
-from ..app import bcrypt
+from .. import bcrypt
 from ..forms import RegistrationForm, LoginForm
 from ..models import User
 
@@ -14,9 +14,15 @@ def register():
         return redirect(url_for("site.index"))
 
     form = RegistrationForm()
+
     if form.validate_on_submit():
         hashed = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
-        user = User(username=form.username.data, email=form.email.data, password=hashed)
+        user = User(
+            username=form.username.data,
+            email=form.email.data,
+            password=hashed
+        )
+
         user.save()
 
         return redirect(url_for("users.login"))
