@@ -15,7 +15,7 @@ def index():
 
 
 # In forms.py SearchForm, there is a radio button for whether you want to search a user or a meme
-    # Make sure to differentiate between that
+# Make sure to differentiate between that
 @site.route("/search-results/<query>", methods=["GET"])
 def search_results(query):
     pass
