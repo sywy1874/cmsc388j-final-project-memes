@@ -8,25 +8,26 @@ from flask_bcrypt import Bcrypt
 from datetime import datetime
 import os
 
-app = Flask(__name__)
 
-# load config
-app.config.from_pyfile("config.py", silent=False)
+def create_app(test_config=None):
 
-# load Flask Mongo, Flask LoginManager, and BCrypt
-db = MongoEngine(app)
-login_manager = LoginManager(app)
-bcrypt = Bcrypt(app)
+    app = Flask(__name__)
 
-from flask_app.users.routes import users
-from flask_app.siteview.routes import site
+    # load config
+    app.config.from_pyfile("config.py", silent=False)
 
-# Register blueprints
-app.register_blueprint(users)
-app.register_blueprint(site)
+    # load Flask Mongo, Flask LoginManager, and BCrypt
+    db = MongoEngine(app)
+    login_manager = LoginManager(app)
+    bcrypt = Bcrypt(app)
 
-login_manager.login_view = "users.login"
+    from flask_app.users.routes import users
+    from flask_app.siteview.routes import site
 
+    # Register blueprints
+    app.register_blueprint(users)
+    app.register_blueprint(site)
 
+    login_manager.login_view = "users.login"
 
-    # Test commit vs code to github
+    return app
