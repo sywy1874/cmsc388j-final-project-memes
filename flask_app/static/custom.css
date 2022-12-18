@@ -15,3 +15,7 @@ body{
 h2{
     font-family: arial;
 }
+
+.row {
+    padding-bottom: 5vh;
+}
