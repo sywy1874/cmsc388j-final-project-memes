@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@300&display=swap');
+
+.navbar {
+    background-color: #1d6da7;
+    padding: 20px;
+    margin-bottom: 5%;
+    font-size: 110%;
+    border: black 5px solid;
+}
+
+body{
+    font-family: 'Chivo Mono', monospace;
+}
+
+h2{
+    font-family: arial;
+}
