@@ -1,0 +1,11 @@
+{% extends "header.html" %} {% block content %}
+<div class="row">
+  <div class="col">
+    <h2>A 404 Error Occurred</h2>
+    <p>
+      Click here to return to the
+      <a href="{{ url_for('site.index') }}">home page</a>
+    </p>
+  </div>
+</div>
+{% endblock %}
