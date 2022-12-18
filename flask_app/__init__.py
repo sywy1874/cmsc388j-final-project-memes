@@ -16,12 +16,14 @@ login_manager = LoginManager()
 def page_not_found(e):
     return render_template("404.html"), 404
 
-def create_app(test_config="config.py"):
+def create_app(test_config=None):
 
     app = Flask(__name__)
 
     # load config
-    app.config.from_pyfile(test_config, silent=False)
+    app.config.from_pyfile("config.py", silent=False)
+    if test_config is not None:
+        app.config.update(test_config)
 
     # load Flask Mongo, Flask LoginManager, and BCrypt
     from . import db
