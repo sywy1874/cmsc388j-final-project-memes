@@ -94,3 +94,23 @@ class NewPost(FlaskForm):
 
         meme.data.seek(0, 0)
 
+### Change Settings Forms ###
+
+class UpdateUsernameForm(FlaskForm):
+    username = StringField('Username', validators=[
+        InputRequired(), Length(min=4, max=20)])
+    confirm_username = StringField(
+        "Confirm Username", validators=[InputRequired(), EqualTo("username")]
+    )
+    submit = SubmitField('Update Username')
+
+    def validate_username(self, username):
+        user = User.objects(username=username.data).first()
+        if user is not None:
+            raise ValidationError("Username is already taken")
+
+
+class UpdateProfilePicForm(FlaskForm):
+    image = FileField('Profile Picture', validators=[
+                      FileRequired(), FileAllowed(['jpg', 'png'], 'Images Only!')])
+    submit = SubmitField('Update Profile Picture')
