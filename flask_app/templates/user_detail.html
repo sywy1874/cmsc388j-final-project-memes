@@ -1,0 +1,41 @@
+{% extends "header.html" %} {% block content %}
+<div class="row">
+  <div class="col">
+    {# Display any error messages #} {% if error_msg %}
+    <b>{{ error_msg }}</b>
+    {% endif %}
+  </div>
+</div>
+{% if user %}
+<div class="row">
+  <div class="col">
+    {# User's Profile Picture #}
+    <img
+      class="propic"
+      src="data:image/png;base64,{{image}}"
+      alt="Profile Picture"
+    />
+  </div>
+  <div class="col">
+    {# Indicate which user's reviews we're looking at #}
+    <h1>Reviews Made By {{ user.username }}</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    {# Show all reviews made by the user #}
+    <h2>Total Reviews: {{ reviews_count }}</h2>
+    <ul class="media-list">
+      {% for review in reviews %}
+      <li class="media review-item">
+        <div class="media-body">
+          <p><b>Review Creation Date:</b> {{ review.date }}</p>
+          <p><b>Reviewed Movie:</b> {{ review.movie_title }}</p>
+          <p><b>Review:</b><br />{{ review.content }}</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endif %} {% endblock %}
