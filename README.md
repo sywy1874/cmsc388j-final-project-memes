@@ -28,3 +28,9 @@
   - similar to movie_detail in the projects
 - about page
 
+#### 2) Misc
+
+- Setup Replit for deployment
+- Implement the two new Python libraries (Plotly, NetworkX(?))
+- CSS styling
+- Security with Flask Talisman
