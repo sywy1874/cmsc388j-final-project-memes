@@ -8,14 +8,23 @@
     border: black 5px solid;
 }
 
+.nav-link {
+    color: white !important;
+}
+
+.nav-item {
+    padding-left: 30px !important;
+}
+
 body{
     font-family: 'Chivo Mono', monospace;
 }
 
-h2{
-    font-family: arial;
-}
-
 .row {
     padding-bottom: 5vh;
+}
+
+.propic {
+    height: 75px;
+    width: 75px;
 }

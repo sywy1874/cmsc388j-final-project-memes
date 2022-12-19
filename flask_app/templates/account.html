@@ -2,13 +2,14 @@
 current_user.is_authenticated %}
 
 <div class="row">
-  <div class="col">
+  <div class="col" style="display: flex; align-items: center">
     {# Profile picture #}
     <img
       class="propic"
       src="data:image/png;base64,{{image}}"
       alt="Profile Picture"
     />
+    <p style="padding-left: 10px">{{current_user.username}}</p>
   </div>
 </div>
 <div class="row">
@@ -36,7 +37,68 @@ current_user.is_authenticated %}
         </div>
         {% endif %}
       </div>
-      {{ update_username_form.submit(class="btn btn-outline-success") }}
+      {{ update_username_form.submit(class="form-control form-control-lg btn
+      btn-outline-info") }}
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    {# Email Update Form #}
+    <h1>Update Email</h1>
+    <form method="POST" action="">
+      {{ update_email_form.csrf_token }}
+      <div class="form-group">
+        {{ update_email_form.email.label }} {{
+        update_email_form.email(class="form-control") }} {% if
+        update_email_form.email.errors %}
+        <div class="alert alert-warning" role="alert">
+          {% for error in update_email_form.email.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% endif %} {{ update_email_form.confirm_email.label }} {{
+        update_email_form.confirm_email(class="form-control") }} {% if
+        update_email_form.confirm_email.errors %}
+        <div class="alert alert-warning" role="alert">
+          {% for error in update_email_form.confirm_email.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      {{ update_email_form.submit(class="form-control form-control-lg btn
+      btn-outline-info") }}
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    {# Password Update Form #}
+    <h1>Update Password</h1>
+    <form method="POST" action="">
+      {{ update_password_form.csrf_token }}
+      <div class="form-group">
+        {{ update_password_form.new_password.label }} {{
+        update_password_form.new_password(class="form-control") }} {% if
+        update_password_form.new_password.errors %}
+        <div class="alert alert-warning" role="alert">
+          {% for error in update_password_form.new_password.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% endif %} {{ update_password_form.confirm_password.label }} {{
+        update_password_form.confirm_password(class="form-control") }} {% if
+        update_password_form.confirm_password.errors %}
+        <div class="alert alert-warning" role="alert">
+          {% for error in update_password_form.confirm_password.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      {{ update_password_form.submit(class="form-control form-control-lg btn
+      btn-outline-info") }}
     </form>
   </div>
 </div>
@@ -57,7 +119,8 @@ current_user.is_authenticated %}
         </div>
         {% endif %}
       </div>
-      {{ update_propic_form.submit(class="btn btn-outline-success") }}
+      {{ update_propic_form.submit(class="form-control form-control-lg btn
+      btn-outline-info") }}
     </form>
   </div>
 </div>

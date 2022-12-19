@@ -3,13 +3,12 @@ from flask_login import current_user, login_required, login_user, logout_user
 
 from .. import bcrypt
 from ..forms import (RegistrationForm, LoginForm,
-                     UpdateUsernameForm, UpdateProfilePicForm,)
+                     UpdateUsernameForm, UpdateEmailForm, UpdatePasswordForm, UpdateProfilePicForm,)
 from ..models import User
 
 from werkzeug.utils import secure_filename
 
-import io
-import base64
+from ..utils import *
 
 users = Blueprint("users", __name__)
 
@@ -71,10 +70,26 @@ def account():
     propic = get_b64_img(current_user.username)
 
     update_username_form = UpdateUsernameForm()
+    update_email_form = UpdateEmailForm()
+    update_password_form = UpdatePasswordForm()
     update_propic_form = UpdateProfilePicForm()
 
     if update_username_form.validate_on_submit():
         current_user.modify(username=update_username_form.username.data)
+        current_user.save()
+
+        return redirect(url_for('users.login'))
+
+    if update_email_form.validate_on_submit():
+        current_user.modify(email=update_email_form.email.data)
+        current_user.save()
+
+        return redirect(url_for('users.login'))
+
+    if update_password_form.validate_on_submit():
+        hashed = bcrypt.generate_password_hash(
+            update_password_form.new_password.data).decode("utf-8")
+        current_user.modify(password=hashed)
         current_user.save()
 
         return redirect(url_for('users.login'))
@@ -93,11 +108,4 @@ def account():
 
         return redirect(url_for('users.account'))
 
-    return render_template("account.html", update_username_form=update_username_form, update_propic_form=update_propic_form, image=propic)
-
-
-def get_b64_img(username):
-    user = User.objects(username=username).first()
-    bytes_im = io.BytesIO(user.profile_pic.read())
-    image = base64.b64encode(bytes_im.getvalue()).decode()
-    return image
+    return render_template("account.html", update_username_form=update_username_form, update_email_form=update_email_form, update_password_form=update_password_form, update_propic_form=update_propic_form, image=propic)
