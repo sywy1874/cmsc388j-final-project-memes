@@ -64,24 +64,28 @@ def meme_detail(memeid):
 
     if comm.validate_on_submit() and current_user.is_authenticated:
        # comm = Comment(
-         #   commenter=current_user._get_current_object(),
-          #  content=form.text.data,
+        #   commenter=current_user._get_current_object(),
+        #  content=form.text.data,
        # )
         comm.save()
 
+    return render_template("meme_detail.html")
 
 # the header will have a button to create new post if user is logged in
+
+
 @site.route("/post_meme", methods=["GET", "POST"])
 @login_required
 def post_meme():
     form = NewPost()
 
     if form.validate_on_submit():
+        print("Categories:", form.categories.data)
         new_memeid = len(Meme.objects) + 1
         meme = Meme(
             poster=current_user._get_current_object(),
             title=form.title.data,
-            categories=form.categories.data,
+            categories=[form.categories.data],
             meme_id=new_memeid
         )
 
@@ -95,7 +99,6 @@ def post_meme():
         return redirect(url_for("site.meme_detail", memeid=new_memeid))
 
     return render_template("post_meme.html", form=form)
-    #return "<h4>Error while posting meme</h4>"
 
 
 @site.route("/about")
