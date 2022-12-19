@@ -1,6 +1,13 @@
 from flask import Blueprint, redirect, url_for, render_template, flash, request
+# Necessary imports for plotly
+import pandas as pd 
+import plotly
+import plotly.express as px
 from flask_login import current_user, login_required
 from werkzeug.utils import secure_filename
+
+# Import for dates
+from datetime import date
 
 # local imports
 from ..forms import NewPost, CommentForm, SearchForm
@@ -128,6 +135,50 @@ def post_meme():
         return redirect(url_for("site.meme_detail", meme_id=new_memeid))
 
     return render_template("post_meme.html", form=form)
+
+@site.route("/user/<username>/stats")
+def user_stats(username):
+    user = User.objects(username=username).first()
+    user_memes = None
+    error_msg = None
+    graph = None
+
+    if user is None:
+        error_msg = f"User {username} not found"
+    else:
+        user_memes = Meme.objects(poster=user)
+        
+        today = date.today().strftime("%d")
+
+        # Creates a list of dates in this month
+        month_dates = []
+        for i in range(1, int(today) + 1):
+            month_dates.append(date.today().strftime("%m") + "/" + str(i))
+        
+        # Frequency list
+        y_axis = [0]*len(month_dates)
+
+        for meme in user_memes:
+            meme_date = meme.date
+            meme_date_split = meme_date.split()
+            temp = meme_date_split[1]
+            post_day = temp[0:len(temp)-1]
+
+            y_axis[int(post_day)-1] += 1
+
+
+        df = pd.DataFrame(dict(
+            Date = month_dates,
+            Posts = y_axis
+        ))
+        
+
+        plot = px.line(df, x="Date", y="Posts", title = 'Post Frequency').update_yaxes(dtick=1)
+
+        bytes_data = plot.to_image(format="png")
+        base64_encoded_image = base64.b64encode(bytes_data).decode("utf-8")
+
+    return render_template("stats.html", graph=base64_encoded_image, username=username, error_msg=error_msg)
 
 
 @site.route("/about")
