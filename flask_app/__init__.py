@@ -4,6 +4,7 @@ from flask_login import (
     LoginManager,
 )
 from flask_bcrypt import Bcrypt
+from flask_talisman import Talisman
 
 from datetime import datetime
 import os
@@ -15,6 +16,7 @@ login_manager = LoginManager()
 
 def page_not_found(e):
     return render_template("404.html"), 404
+
 
 def create_app(test_config=None):
 
@@ -30,6 +32,17 @@ def create_app(test_config=None):
     db.init_app(app)
     login_manager.init_app(app)
     bcrypt.init_app(app)
+
+    csp = {
+        'image-src': 'data:*',
+        'style-src': ['\'self\'', 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css', ],
+        'script-src': ['\'self\'', 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js', 'https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', 'https://code.jquery.com/jquery-3.4.1.slim.min.js'],
+    }
+
+    Talisman(app,
+             content_security_policy=csp,
+             content_security_policy_report_uri='/csp_reports'
+             )
 
     from flask_app.users.routes import users
     from flask_app.siteview.routes import site

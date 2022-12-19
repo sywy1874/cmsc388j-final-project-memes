@@ -22,7 +22,7 @@
             alt="{{ meme.title }}"
         />
         <p>Date Posted: {{ meme.date }}</p>
-        <p>Categories: {{ meme.categories }}</p>
+        <p><b>Categories:</b> {{ meme.categories }}</p>
       </div>
     </div>
   </div>
@@ -34,8 +34,8 @@
     <h1> <b>Comments</b> <small class="float-right">{{ comments|length }} comments</small></h1>
     <ul class="media-list">
       {% for i in range(comments|length) %}
-      <li class="media" style="padding-bottom: 20px;">
-        <img class="mr-3 propic" src="data:image/png;base64,{{commenter_propics[i]}}" alt="">
+      <li class="media bottom-padded">
+        <img class="mr-3 propic-mini" src="data:image/png;base64,{{commenter_propics[i]}}" alt="">
         <div class="media-body">
           <span class="float-right">
             <small>{{ comments[i].date }}</small>
