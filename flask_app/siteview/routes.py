@@ -69,8 +69,8 @@ def new_meme():
 
 
 @site.route("/about")
-def about_page():
-    pass
+def about():
+    return render_template("about.html")
 
 
 # Might need more view functions?
