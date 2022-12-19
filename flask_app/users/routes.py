@@ -50,7 +50,7 @@ def login():
                 user.password, form.password.data
         ):
             login_user(user)
-            return redirect(url_for("site.index"))
+            return redirect(url_for("site.index", current_user = user))
         else:
             flash("Login failed. Check your username and/or password")
             return redirect(url_for("users.login"))

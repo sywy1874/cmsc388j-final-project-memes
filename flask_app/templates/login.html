@@ -11,6 +11,7 @@
         Register today for your own meme account! <a href="{{ url_for('users.register') }}"> Click to register!</a>
     </div>
 </div>
+<hr>
 <div class="row">
     <div class="col">
         {% with messages = get_flashed_messages() %}
@@ -48,6 +49,7 @@
                 </div>
                 {% endif %}
             </div>
+            
             <div class="form-group">
                 {{ form.submit(class="form-control form-control-lg") }}
             </div>

@@ -3,22 +3,35 @@ from flask_login import current_user, login_required
 from werkzeug.utils import secure_filename
 
 # local imports
-from ..forms import NewPost, CommentForm
+from ..forms import NewPost, CommentForm, SearchForm
 from ..models import User, Meme, Comment
 
 site = Blueprint("site", __name__)
 
 
-@site.route("/", methods=["GET"])
+#@site.route("/", methods=["GET"])
+#def index():
+    #return render_template("index.html")
+
+@site.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template("index.html")
+    form = SearchForm()
+
+    if form.validate_on_submit():
+        return redirect(url_for('query', query=form.query.data))
+
+    return render_template('index.html', form=form)
 
 
 # In forms.py SearchForm, there is a radio button for whether you want to search a user or a meme
 # Make sure to differentiate between that
 @site.route("/search-results/<query>", methods=["GET"])
 def search_results(query):
-    pass
+    try:
+        results = Meme.objects(title=query)
+        return render_template('query.html', results=results)
+    except ValueError as error:
+        return render_template('query.html', error_msg=error)
 
 
 
@@ -35,7 +48,11 @@ def meme_detail(memeid):
     comm = CommentForm()
 
     if comm.validate_on_submit() and current_user.is_authenticated:
-        pass
+       # comm = Comment(
+         #   commenter=current_user._get_current_object(),
+          #  content=form.text.data,
+       # )
+        comm.save()
 
 
 # the header will have a button to create new post if user is logged in
