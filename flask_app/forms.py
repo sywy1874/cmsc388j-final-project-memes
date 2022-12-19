@@ -13,6 +13,9 @@ from wtforms.validators import (
     ValidationError,
 )
 
+import re
+from . import bcrypt
+
 # local imports
 from .models import User
 
@@ -42,7 +45,16 @@ class RegistrationForm(FlaskForm):
         pw = password.data
 
         if len(pw) < 10:
-            raise ValidationError("Password must be at least 10 characters long!")
+            raise ValidationError(
+                "Password must be at least 10 characters long!")
+
+        if not re.search('[a-zA-Z]+', pw):
+            raise ValidationError(
+                'Password must contain at least one alphabetic character!')
+
+        if not re.search('[0-9]+', pw):
+            raise ValidationError(
+                'Password must contain at least one numeric character!')
 
 
 class LoginForm(FlaskForm):
@@ -96,6 +108,7 @@ class NewPost(FlaskForm):
 
 ### Change Settings Forms ###
 
+
 class UpdateUsernameForm(FlaskForm):
     username = StringField('Username', validators=[
         InputRequired(), Length(min=4, max=20)])
@@ -108,6 +121,43 @@ class UpdateUsernameForm(FlaskForm):
         user = User.objects(username=username.data).first()
         if user is not None:
             raise ValidationError("Username is already taken")
+
+
+class UpdateEmailForm(FlaskForm):
+    email = StringField("Email", validators=[InputRequired(), Email()])
+    confirm_email = StringField(
+        "Confirm Email", validators=[InputRequired(), EqualTo("email")]
+    )
+    submit = SubmitField('Update Email')
+
+    def validate_email(self, email):
+        user = User.objects(email=email.data).first()
+        if user is not None:
+            raise ValidationError("Email is taken")
+
+
+class UpdatePasswordForm(FlaskForm):
+
+    new_password = PasswordField("New Password", validators=[InputRequired()])
+    confirm_password = PasswordField(
+        "Confirm New Password", validators=[InputRequired(), EqualTo("new_password")]
+    )
+    submit = SubmitField('Update Password')
+
+    def validate_new_password(self, new_password):
+        pw = new_password.data
+
+        if len(pw) < 10:
+            raise ValidationError(
+                "Password must be at least 10 characters long!")
+
+        if not re.search('[a-zA-Z]+', pw):
+            raise ValidationError(
+                'Password must contain at least one alphabetic character!')
+
+        if not re.search('[0-9]+', pw):
+            raise ValidationError(
+                'Password must contain at least one numeric character!')
 
 
 class UpdateProfilePicForm(FlaskForm):
