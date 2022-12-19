@@ -72,3 +72,31 @@ b {
     height: 60px; 
     width: 60px;
 }
+
+.user_detail_meme_pic{
+    width: 50%;
+    border: black 5px solid;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.title{
+    font-size:160%;
+    margin-bottom: 20px;
+}
+
+#memes_header1{
+    margin-top: 45px;
+    margin-bottom:45px;
+}
+
+#user_hr{
+    height: 10px;
+    background-color: black;
+}
+
+.ud_item{
+    border:  black dashed 2px;
+    padding: 20px;
+    margin-bottom: 20px;
+}

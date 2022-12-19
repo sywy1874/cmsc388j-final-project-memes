@@ -53,20 +53,23 @@ def search_results(query, query_type):
             return render_template('user_query.html', error_msg=error)
     
 
-
-
-## NOTE: UNFINISHED
 @site.route("/user/<username>")
 def user_detail(username):
     user = User.objects(username=username).first()
     user_memes = None
     error_msg = None
     propic = get_b64_img(user.username)
+    meme_pics = []
 
     if user is None:
         error_msg = f"User {username} not found"
     else:
         user_memes = Meme.objects(poster=user)
+
+        # Creates a image byte array to pass to template
+        for meme in user_memes:
+            bytes_im = io.BytesIO(meme.meme_upload.read())
+            meme_pics.append(base64.b64encode(bytes_im.getvalue()).decode())
     
     # Renders user_detail. Passes in User's username, their memes, and their profile pic.
     # Also passes in an error_msg if there is one.
@@ -74,6 +77,7 @@ def user_detail(username):
                             username=username, 
                             user_memes=user_memes,
                             image=propic,
+                            usermemes_memepics = zip(user_memes,meme_pics),
                             error_msg=error_msg)
 
 @site.route("/meme/<meme_id>", methods=["GET", "POST"])
