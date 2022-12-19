@@ -25,9 +25,11 @@ class Meme(db.Document):
     meme_upload = db.ImageField(size=(1280, 720, True), required=True)
     meme_id = db.IntField(required=True)
     categories = db.ListField(db.StringField())
+    date = db.StringField(required=True)
 
 
 class Comment(db.Document):
     for_post = db.ReferenceField(Meme, required=True)
     commenter = db.ReferenceField(User, required=True)
-    text = db.StringField(required=True)
+    content = db.StringField(required=True)
+    date = db.StringField(required=True)

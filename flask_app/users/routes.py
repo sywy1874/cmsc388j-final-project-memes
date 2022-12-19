@@ -106,6 +106,6 @@ def account():
                 img.stream, content_type=content_type)
         current_user.save()
 
-        return redirect(url_for('users.account'))
+        return redirect(url_for('users.login'))
 
     return render_template("account.html", update_username_form=update_username_form, update_email_form=update_email_form, update_password_form=update_password_form, update_propic_form=update_propic_form, image=propic)

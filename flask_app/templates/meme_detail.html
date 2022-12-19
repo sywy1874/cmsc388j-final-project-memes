@@ -1,4 +1,82 @@
 {% extends "header.html" %}
 {% block content %}
-<h1>MEME PAGE</h1>
+{% if error_msg %}
+<h1><b>{{ error_msg }}</b></h1>
+{% endif %}
+
+{% if meme %}
+{# Display meme #}
+<div class="row">
+  <div class="col">
+    <div class="card text-center">
+      <div class="card-header">
+        <h1><b>{{ meme.title }}</b></h1>
+        <h3>Poster: <a href="{{ url_for('site.user_detail', username=meme.poster.username) }}">
+            <strong>@{{ meme.poster.username }}</strong>
+          </a></h3>
+      </div>
+      <div class="card-body">
+        <img
+            class="memepic"
+            src="data:image/png;base64,{{meme_pic}}"
+            alt="{{ meme.title }}"
+        />
+        <p>Date Posted: {{ meme.date }}</p>
+        <p>Categories: {{ meme.categories }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Display Comments #}
+<div class="row">
+  <div class="col-md-12">
+    <h1> <b>Comments</b> <small class="float-right">{{ comments|length }} comments</small></h1>
+    <ul class="media-list">
+      {% for i in range(comments|length) %}
+      <li class="media" style="padding-bottom: 20px;">
+        <img class="mr-3 propic" src="data:image/png;base64,{{commenter_propics[i]}}" alt="">
+        <div class="media-body">
+          <span class="float-right">
+            <small>{{ comments[i].date }}</small>
+          </span>
+          <a href="{{ url_for('site.user_detail', username=comments[i].commenter.username) }}">
+            <strong>@{{ comments[i].commenter.username }}</strong>
+          </a>
+          <p>
+            {{ comments[i].content }}
+          </p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% if current_user.is_authenticated %}
+{# Comment submission form #}
+<div class="row">
+  <div class="col">
+    <form method="POST" action="">
+      {{ form.csrf_token }}
+      <div class="form-group">
+        {{ form.text.label }}
+        {{ form.text(class="form-control") }}
+
+        {% if form.text.errors %}
+        <div class="alert alert-warning" role="alert">
+          {% for error in form.text.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+      </div>
+      {{ form.submit(class="form-control form-control-lg btn btn-outline-info") }}
+    </form>
+  </div>
+</div>
+{% endif %}
+{% endif %}
+
 {% endblock %}

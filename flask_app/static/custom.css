@@ -20,6 +20,14 @@ body{
     font-family: 'Chivo Mono', monospace;
 }
 
+h1 {
+    color: #1d6da7;
+}
+
+b {
+    color: #1d6da7;
+}
+
 .row {
     padding-bottom: 5vh;
 }
@@ -27,4 +35,13 @@ body{
 .propic {
     height: 75px;
     width: 75px;
+    border-radius: 50px;
+}
+
+.memepic {
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    overflow: hidden;
 }
