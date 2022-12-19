@@ -16,24 +16,36 @@ def index():
     form = SearchForm()
 
     if form.validate_on_submit():
-        print("VALIDATING")
-        return redirect(url_for('site.search_results', query=form.query.data))
+        return redirect(url_for('site.search_results', query=form.query.data, query_type=request.form.get("usr_or_post")))
 
     return render_template('index.html', form=form)
 
 
-# In forms.py SearchForm, there is a radio button for whether you want to search a user or a meme
-# Make sure to differentiate between that
-
-## NOTE: UNFINISHED
-@site.route("/search-results/<query>", methods=["GET"])
-def search_results(query):
+@site.route("/search-results/<query_type>/<query>", methods=["GET"])
+def search_results(query, query_type):
+    
     try:
-        results = Meme.objects(title=query)
-        print(results)
-        return render_template('query.html', results=results)
+        if query_type == "memes":
+            results = Meme.objects(title=query)
+            meme_pics = []
+            for meme in results:
+                bytes_im = io.BytesIO(meme.meme_upload.read())
+                meme_pic = base64.b64encode(bytes_im.getvalue()).decode()
+                meme_pics.append(meme_pic)
+            return render_template('query.html', results=results, meme_pics=meme_pics)
+        else: # query_type == users
+            results = User.objects(username=query)
+            propics = []
+            for result in results:
+                propics.append(get_b64_img(result.username))
+            return render_template('user_query.html', results=results, propics=propics)
     except ValueError as error:
-        return render_template('query.html', error_msg=error)
+        if query_type == "memes":
+            return render_template('query.html', error_msg=error)
+        else:
+            return render_template('user_query.html', error_msg=error)
+    
+
 
 
 ## NOTE: UNFINISHED

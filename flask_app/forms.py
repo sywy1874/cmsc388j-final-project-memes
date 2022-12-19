@@ -69,7 +69,7 @@ class SearchForm(FlaskForm):
     )
 
     usr_or_post = RadioField(
-        "Categories", choices=[('users', 'Users'), ('memes', 'Memes')]
+        "Categories", choices=[('users', 'Users'), ('memes', 'Memes')], validators=[InputRequired()]
     )
 
     submit = SubmitField("Search")

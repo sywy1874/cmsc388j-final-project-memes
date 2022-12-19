@@ -1,23 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@300&display=swap');
 
-.navbar {
-    background-color: #1d6da7;
-    padding: 20px;
-    margin-bottom: 5%;
-    font-size: 110%;
-    border: black 5px solid;
-}
-
-.nav-link {
-    color: white !important;
-}
-
-.nav-item {
-    padding-left: 30px !important;
-}
-
-body{
+body {
     font-family: 'Chivo Mono', monospace;
+    margin-bottom: 5vh;
 }
 
 h1 {
@@ -28,11 +13,48 @@ b {
     color: #1d6da7;
 }
 
-.row {
+.navbar {
+    background-color: #1d6da7;
+    padding: 20px;
+    margin-bottom: 5%;
+    font-size: 110%;
+    border: black 5px solid;
+}
+
+.navbar-brand {
+    color: #FFFFFF !important;
+    font-size: 150% !important;
+}
+
+.nav-link {
+    color: white !important;
+}
+
+.nav-item {
+    padding-left: 30px !important;
+}
+
+.left-padded {
+    padding-left: 10px;
+}
+
+.bottom-padded {
     padding-bottom: 5vh;
 }
 
+.userinfodiv {
+    display: flex !important; 
+    flex-direction: column;
+    align-items: center;
+}
+
 .propic {
+    height: 200px;
+    width: 200px;
+    border-radius: 125px;
+}
+
+.propic-mini {
     height: 75px;
     width: 75px;
     border-radius: 50px;
@@ -44,4 +66,9 @@ b {
     height: 100%;
     object-fit: cover;
     overflow: hidden;
+}
+
+.memepic-mini {
+    height: 60px; 
+    width: 60px;
 }

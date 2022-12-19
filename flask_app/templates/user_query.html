@@ -4,11 +4,13 @@
 <div class="container-fluid">
   {% for i in range(results|length) %}
   <div class="media">
-    <img class="memepic-mini" src="data:image/png;base64,{{meme_pics[i]}}" />
+    <img class="propic-mini" src="data:image/png;base64,{{propics[i]}}" />
     <div class="media-body">
       <h5>
-        <a href="{{ url_for('site.meme_detail', meme_id=results[i].meme_id) }}">
-          {{ results[i].title }}
+        <a
+          href="{{ url_for('site.user_detail', username=results[i].username) }}"
+        >
+          {{ results[i].username }}
         </a>
       </h5>
     </div>
@@ -16,7 +18,7 @@
   {% endfor %}
 </div>
 {% else %}
-<h1>Sorry! No memes to be found</h1>
+<h1>Sorry! No users to be found</h1>
 <p>
   Click here to return to the
   <a href="{{ url_for('site.index') }}">home page</a>

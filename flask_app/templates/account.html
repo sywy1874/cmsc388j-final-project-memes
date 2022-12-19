@@ -1,18 +1,18 @@
 {% extends "header.html" %} {% block content %} {% if
 current_user.is_authenticated %}
 
-<div class="row">
-  <div class="col" style="display: flex; align-items: center">
+<div class="row bottom-padded">
+  <div class="col userinfodiv">
     {# Profile picture #}
     <img
       class="propic"
       src="data:image/png;base64,{{image}}"
       alt="Profile Picture"
     />
-    <p style="padding-left: 10px">{{current_user.username}}</p>
+    <p class="left-padded">{{current_user.username}}</p>
   </div>
 </div>
-<div class="row">
+<div class="row bottom-padded">
   <div class="col">
     {# Username Update Form #}
     <h1>Update Username</h1>
@@ -128,7 +128,7 @@ current_user.is_authenticated %}
   <div class="col">
     {# Link to see all of the current user's reviews. #}
     <a href="{{ url_for('site.user_detail', username=current_user.username) }}"
-      >See all of your reviews here</a
+      >See all of your own posts here</a
     >
   </div>
 </div>
