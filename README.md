@@ -6,11 +6,11 @@
 - ~~login (login.html)~~
 - ~~register (register.html)~~
 - ~~home page (index.html)~~
-- search results
+- **search results**
 - ~~new meme (post_meme.html)~~
 - ~~viewing a meme~~
-- user_detail (viewing someone else's account)
-- account (viewing your own account) - user_detail.html + account.html
+- ~~user_detail (viewing someone else's account)~~
+- ~~account (viewing your own account) - user_detail.html + account.html~~
 - ~~about page~~
 - ~~Styling header~~
 
@@ -23,17 +23,17 @@
 
 - ~~index (home page)~~
 - ~~search_results~~
-- user_detail
+- ~~user_detail~~
 - ~~meme_detail~~
-  - similar to movie_detail in the projects
+  - ~~similar to movie_detail in the projects~~
 - ~~about page~~
 
 #### 2) Misc
 
-- Change search functionality to look for users that have a similar username to the search instead of the exact name
-- Add default profile picture for new users
-- Setup Replit for deployment
-- Maybe the likes / hearts system + friending system
-- Implement the two new Python libraries (Plotly, NetworkX(?))
-  - Maybe consider switching to a simpler library like Flask-Mail
+- **Change search functionality to look for users that have a similar username to the search instead of the exact name**
+- **Add default profile picture for new users**
+- ~~Setup Replit for deployment~~ We will record the site (faster)
+- **Maybe the likes / hearts system + friending system (do we still need this??)**
+- Implement the two new Python libraries (~~Plotly~~, NetworkX(?))
+  - **Maybe consider switching to a simpler library like Flask-Mail**
 - ~~- Security with Flask Talisman~~
