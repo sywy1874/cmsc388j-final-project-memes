@@ -16,7 +16,8 @@ def index():
     form = SearchForm()
 
     if form.validate_on_submit():
-        return redirect(url_for('query', query=form.query.data))
+        print("VALIDATING")
+        return redirect(url_for('site.search_results', query=form.query.data))
 
     return render_template('index.html', form=form)
 
@@ -29,6 +30,7 @@ def index():
 def search_results(query):
     try:
         results = Meme.objects(title=query)
+        print(results)
         return render_template('query.html', results=results)
     except ValueError as error:
         return render_template('query.html', error_msg=error)

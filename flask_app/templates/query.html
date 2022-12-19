@@ -7,10 +7,10 @@
 <div class="container-fluid">
     {% for result in results %}
     <div class="media">
-        <img src="{{ result.poster_url }}" class="mr-3" alt="missing">
+        <img src="{{ result.meme }}" class="mr-3" alt="missing">
         <div class="media-body">
         <h5 class="mt-0">
-            <a href="{{ url_for('movie_detail', movie_id=result.imdb_id) }}">
+            <a href="{{ url_for('site.post_meme', meme_id=result.meme_id) }}">
                 {{ result.title }}
             </a> 
             ({{ result.year }})
