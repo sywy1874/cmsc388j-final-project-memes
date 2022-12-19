@@ -1,0 +1,7 @@
+{% extends "header.html" %} {% block content %}
+<h1>MEME-STAGRAM</h1>
+<h2>{{ username }}'s STATS</h2>
+
+<img src="data:image/jpeg;base64,{{ graph | safe}}">
+{% endblock %}
+

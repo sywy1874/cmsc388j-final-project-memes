@@ -10,6 +10,11 @@ current_user.is_authenticated %}
       alt="Profile Picture"
     />
     <p class="left-padded">{{current_user.username}}</p>
+
+    <!--Link to Stats-->
+    <a href="{{ url_for('site.user_stats', username=current_user.username) }}"
+      >See your stats</a>
+
   </div>
 </div>
 <div class="row bottom-padded">

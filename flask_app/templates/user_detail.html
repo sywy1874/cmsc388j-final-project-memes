@@ -12,21 +12,30 @@
 <div class="row">
   <div class="col">
     <!--Memes: displays number of memes made by user.-->
-    <h1> Memes <small class="float-right">{{ user_memes.count() }} total memes</small></h1>
+    <hr id="user_hr">
+    <h1 id = "memes_header1"> Memes <small class="float-right">{{ user_memes.count() }} total memes</small></h1>
+
     <ul class="media-list">
-      {% for meme in user_memes %}
-      <li class="media review-item">
+      {% for meme, pic in usermemes_memepics: %}
+      <li class="media ud_item">
         <div class="media-body">
           <span class="float-right">
             <small>{{ meme.date }}</small>
           </span>
 
           <!--Displays Meme title, then image underneath.-->
-          <strong>Title: <a href="{{ url_for('site.meme_detail', meme_id=meme.meme_id) }}">
+          <strong class = "title">Title: <a href="{{ url_for('site.meme_detail', meme_id=meme.meme_id) }}">
               {{ meme.title }}
             </a>
-          </strong>
-          <img class="memepic" src="data:image/png;base64,{{meme.meme_upload}}" alt="{{ meme.title }}" />
+          </strong> 
+
+          <br>
+        
+          <img class="user_detail_meme_pic" 
+           
+               src="data:image/png;base64,{{ pic }}" 
+
+               alt="{{ meme.title }}" />
 
           <p>{{ meme.categories }}</p>
         
@@ -37,17 +46,3 @@
   </div>
 </div>
 {% endblock %}
-
-<!--username=username, 
-                            user_memes=user_memes,
-                            image=propic,
-                            posts_count=posts_count,
-                            error_msg=error_msg)
-                          
-class Meme(db.Document):
-    poster = db.ReferenceField(User, required=True)
-    title = db.StringField(required=True)
-    meme_upload = db.ImageField(size=(1280, 720, True), required=True)
-    meme_id = db.IntField(required=True)
-    categories = db.ListField(db.StringField())
-    date = db.StringField(required=True)-->
