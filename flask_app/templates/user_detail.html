@@ -8,30 +8,30 @@
 </div>
 {% if user %}
 <div class="row">
-  <div class="col">
-    {# User's Profile Picture #}
+  <div class="col" style="display: flex; align-items: center">
+    {# Profile picture #}
     <img
       class="propic"
       src="data:image/png;base64,{{image}}"
       alt="Profile Picture"
     />
-  </div>
-  <div class="col">
     {# Indicate which user's reviews we're looking at #}
-    <h1>Reviews Made By {{ user.username }}</h1>
+    {% if user == current_user.username %}
+    <p style="padding-left: 10px">My Posts</p>
+    {% else %}
+    <p style="padding-left: 10px">{{current_user.username}}</p>
+    {% endif %}
   </div>
 </div>
 <div class="row">
   <div class="col">
     {# Show all reviews made by the user #}
-    <h2>Total Reviews: {{ reviews_count }}</h2>
+    <h2>Total Reviews: {{ posts_count }}</h2>
     <ul class="media-list">
-      {% for review in reviews %}
+      {% for post in posts %}
       <li class="media review-item">
         <div class="media-body">
-          <p><b>Review Creation Date:</b> {{ review.date }}</p>
-          <p><b>Reviewed Movie:</b> {{ review.movie_title }}</p>
-          <p><b>Review:</b><br />{{ review.content }}</p>
+            <p> FILLER </p>
         </div>
       </li>
       {% endfor %}

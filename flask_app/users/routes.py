@@ -8,8 +8,7 @@ from ..models import User
 
 from werkzeug.utils import secure_filename
 
-import io
-import base64
+from ..utils import *
 
 users = Blueprint("users", __name__)
 
@@ -110,10 +109,3 @@ def account():
         return redirect(url_for('users.account'))
 
     return render_template("account.html", update_username_form=update_username_form, update_email_form=update_email_form, update_password_form=update_password_form, update_propic_form=update_propic_form, image=propic)
-
-
-def get_b64_img(username):
-    user = User.objects(username=username).first()
-    bytes_im = io.BytesIO(user.profile_pic.read())
-    image = base64.b64encode(bytes_im.getvalue()).decode()
-    return image
