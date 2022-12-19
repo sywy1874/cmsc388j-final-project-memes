@@ -93,7 +93,7 @@ class NewPost(FlaskForm):
     )
 
     categories = SelectField(
-        "Categories", choices=[('wsome', 'Wholesome'), ('sht', 'Shitpost'), ('surr', 'Surreal')]
+        "Categories", choices=[('Wholesome', 'Wholesome'), ('Shitpost', 'Shitpost'), ('Surreal', 'Surreal')]
     )
 
     submit = SubmitField("Submit Meme!")

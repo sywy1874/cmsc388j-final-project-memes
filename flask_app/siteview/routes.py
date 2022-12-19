@@ -33,14 +33,13 @@ def search_results(query):
     except ValueError as error:
         return render_template('query.html', error_msg=error)
 
-    return render_template("query.html", results=results)
-
 
 ## NOTE: UNFINISHED
 @site.route("/user/<username>")
 def user_detail(username):
     user = User.objects(username=username).first()
     propic = get_b64_img(user.username)
+    
     posts = None
     posts_count = 0
     error_msg = None
@@ -53,25 +52,37 @@ def user_detail(username):
     return render_template('user_detail.html', user=user, image=propic, posts=posts, posts_count=posts_count, error_msg=error_msg)
 
 
-# similar to how movie reviews are posted in the projects
-# meme_detail should post a comment if the form is validated
-# otherwise just display the meme
+@site.route("/meme/<meme_id>", methods=["GET", "POST"])
+def meme_detail(meme_id):
+    
+    meme = Meme.objects(meme_id=meme_id).first()
+    error_msg = None
+    meme_pic = None
+    
+    if not meme:
+        error_msg="There is no meme to be found here :("
+    else:
+        bytes_im = io.BytesIO(meme.meme_upload.read())
+        meme_pic = base64.b64encode(bytes_im.getvalue()).decode()
 
-## NOTE: UNFINISHED
-@site.route("/meme/<memeid>", methods=["GET", "POST"])
-def meme_detail(memeid):
-    comm = CommentForm()
+    form = CommentForm()
+    if form.validate_on_submit() and current_user.is_authenticated:
+       comm = Comment(
+           for_post=meme,
+           commenter=current_user._get_current_object(),
+           content=form.text.data,
+           date=current_time(),
+       )
+       comm.save()
+       
+       return redirect(request.path)
 
-    if comm.validate_on_submit() and current_user.is_authenticated:
-       # comm = Comment(
-        #   commenter=current_user._get_current_object(),
-        #  content=form.text.data,
-       # )
-        comm.save()
+    comments = Comment.objects(for_post=meme)
+    commenter_propics = []
+    for comment in comments:
+        commenter_propics.append(get_b64_img(comment.commenter.username))
 
-    return render_template("meme_detail.html")
-
-# the header will have a button to create new post if user is logged in
+    return render_template("meme_detail.html", meme=meme, meme_pic=meme_pic, form=form, comments=comments, commenter_propics=commenter_propics, error_msg=error_msg)
 
 
 @site.route("/post_meme", methods=["GET", "POST"])
@@ -86,7 +97,8 @@ def post_meme():
             poster=current_user._get_current_object(),
             title=form.title.data,
             categories=[form.categories.data],
-            meme_id=new_memeid
+            meme_id=new_memeid,
+            date=current_time(),
         )
 
         img = form.meme.data
@@ -96,7 +108,7 @@ def post_meme():
         meme.meme_upload.put(img.stream, content_type=content_type)
         meme.save()
 
-        return redirect(url_for("site.meme_detail", memeid=new_memeid))
+        return redirect(url_for("site.meme_detail", meme_id=new_memeid))
 
     return render_template("post_meme.html", form=form)
 
