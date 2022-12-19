@@ -36,4 +36,4 @@
 - Maybe the likes / hearts system + friending system
 - Implement the two new Python libraries (Plotly, NetworkX(?))
   - Maybe consider switching to a simpler library like Flask-Mail
-~~- Security with Flask Talisman~~
+- ~~- Security with Flask Talisman~~
