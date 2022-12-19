@@ -6,14 +6,24 @@
     <form method="POST" action="">
       {{ form.csrf_token }}
       <div class="form-group">
-        {{ form.query.label }} {{ form.query(class="form-control") }} {% if
-        form.query.errors %}
+        {{ form.query.label }} 
+        {{ form.query(class="form-control") }} 
+
+        {% for subfield in form.usr_or_post %}
+          <tr>
+            <td>{{ subfield }}</td>
+            <td>{{ subfield.label }}</td>
+          </tr>
+        {% endfor %}
+        
+        {% if form.query.errors %}
         <div class="alert alert-warning" role="alert">
           {% for error in form.query.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
         {% endif %}
+
       </div>
       {{ form.submit(class="btnbtn-outline-info") }}
     </form>
