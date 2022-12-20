@@ -10,7 +10,7 @@ current_user.is_authenticated %}
       <img class="propic" src="data:image/png;base64,{{image}}" alt="Profile Picture" />
       {% endif %}
 
-      <p class="left-padded">{{current_user.username}}</p>
+      <p>{{current_user.username}}</p>
 
       <!--Link to Stats-->
       <a href="{{ url_for('site.user_stats', username=current_user.username) }}">See your stats</a>

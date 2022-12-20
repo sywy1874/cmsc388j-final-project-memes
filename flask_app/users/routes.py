@@ -1,7 +1,7 @@
+from flask import Flask
+
 from flask import Blueprint, redirect, url_for, render_template, flash, request
 from flask_login import current_user, login_required, login_user, logout_user
-
-#from django.core.files import File
 
 from .. import bcrypt
 from ..forms import (RegistrationForm, LoginForm,
@@ -9,6 +9,8 @@ from ..forms import (RegistrationForm, LoginForm,
 from ..models import User
 
 from werkzeug.utils import secure_filename
+
+from flask_mail import Mail, Message
 
 from ..utils import *
 
@@ -23,6 +25,8 @@ def register():
     form = RegistrationForm()
 
     if form.validate_on_submit():
+        
+
         hashed = bcrypt.generate_password_hash(
             form.password.data).decode("utf-8")
 
@@ -31,6 +35,22 @@ def register():
             email=form.email.data,
             password=hashed,
         )
+
+        app = Flask(__name__)
+
+        mail= Mail(app)
+
+        app.config['MAIL_SERVER']='smtp.gmail.com'
+        app.config['MAIL_PORT'] = 465
+        app.config['MAIL_USERNAME'] = 'ramennoodles408@gmail.com'
+        app.config['MAIL_PASSWORD'] = 'aubypindfinoyxgd'
+        app.config['MAIL_USE_TLS'] = False
+        app.config['MAIL_USE_SSL'] = True
+        mail = Mail(app)
+
+        msg = Message('YOU ARE ARE AN OFFICIAL MEMER!', sender = 'ramennoodles408@gmail.com', recipients = [user.email])
+        msg.body = "Welcome to Memestagram " + user.username + "!"
+        mail.send(msg)
         
         user.save()
 

@@ -7,6 +7,7 @@ from flask_bcrypt import Bcrypt
 from flask_talisman import Talisman
 
 from datetime import datetime
+
 import os
 
 db = MongoEngine()
