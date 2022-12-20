@@ -3,7 +3,23 @@
 <div class="row">
   <div class="col">
     <!--Displays user profile picture-->
-    <img class="propic" src="data:image/png;base64,{{image}}" alt="image">
+
+    {# Profile picture #}
+    {%if image|length < 1 %}
+    <img
+      class="propic"
+      src="{{url_for('static', filename='defaultpfp.png')}}"
+      alt="Profile Picture"
+    />
+    {% else %}
+    <img
+      class="propic"
+      src="data:image/png;base64,{{image}}"
+      alt="Profile Picture"
+    />
+    {% endif %}
+
+
   </div>
   <div class="col">
     <h2>{{ username }}'s Memes</h2>

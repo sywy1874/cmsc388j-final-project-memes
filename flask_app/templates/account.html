@@ -4,26 +4,19 @@ current_user.is_authenticated %}
 <div class="row bottom-padded">
   <div class="col userinfodiv">
     {# Profile picture #}
-    {%if image|length < 1 %}
-    <h1 >{{image}}</h1>
-    <img
-      class="propic"
-      src="{{url_for('static', filename='defaultpfp.png')}}"
-      alt="Profile Picture"
-    />
-    {% else %}
-    <img
-      class="propic"
-      src="data:image/png;base64,{{image}}"
-      alt="Profile Picture"
-    />
-    {% endif %}
+    {%if image|length < 1 %} <h1>{{image}}</h1>
+      <img class="propic" src="{{url_for('static', filename='defaultpfp.png')}}" alt="Profile Picture" />
+      {% else %}
+      <img class="propic" src="data:image/png;base64,{{image}}" alt="Profile Picture" />
+      {% endif %}
 
-    <p class="left-padded">{{current_user.username}}</p>
+      <p class="left-padded">{{current_user.username}}</p>
 
-    <!--Link to Stats-->
-    <a href="{{ url_for('site.user_stats', username=current_user.username) }}"
-      >See your stats</a>
+      <!--Link to Stats-->
+      <a href="{{ url_for('site.user_stats', username=current_user.username) }}">See your stats</a>
+      {# Link to see all of the current user's memes. #}
+     <hr>
+      <a href="{{ url_for('site.user_detail', username=current_user.username) }}">See all of your own posts here</a>
 
   </div>
 </div>
@@ -141,10 +134,7 @@ current_user.is_authenticated %}
 </div>
 <div class="row">
   <div class="col">
-    {# Link to see all of the current user's reviews. #}
-    <a href="{{ url_for('site.user_detail', username=current_user.username) }}"
-      >See all of your own posts here</a
-    >
+   
   </div>
 </div>
 
