@@ -35,9 +35,19 @@ def create_app(test_config=None):
     bcrypt.init_app(app)
 
     csp = {
-        'image-src': 'data:*',
-        'style-src': ['\'self\'', 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css', ],
-        'script-src': ['\'self\'', 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js', 'https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', 'https://code.jquery.com/jquery-3.4.1.slim.min.js'],
+        'default-src': ['\'self\''],
+        'img-src': ['\'self\'', 'data:'],
+        'font-src': ['https://fonts.gstatic.com'],
+        'style-src': ['\'self\'',
+                      'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css',
+                      'https://fonts.googleapis.com/',],
+        'script-src': ['\'self\'',
+                       'https://cdn.plot.ly/plotly-latest.min.js',
+                       'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js',
+                       'https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js',
+                       'https://code.jquery.com/jquery-3.4.1.slim.min.js',
+
+                       ],
     }
 
     Talisman(app,
