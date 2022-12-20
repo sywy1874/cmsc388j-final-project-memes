@@ -9,6 +9,8 @@ from werkzeug.utils import secure_filename
 # Import for dates
 from datetime import date
 
+import re
+
 # local imports
 from ..forms import NewPost, CommentForm, SearchForm
 from ..models import User, Meme, Comment
@@ -33,7 +35,7 @@ def search_results(query, query_type):
     
     try:
         if query_type == "memes":
-            results = Meme.objects(title=query)
+            results = Meme.objects(title = {'$regex': query})
             meme_pics = []
             for meme in results:
                 bytes_im = io.BytesIO(meme.meme_upload.read())
