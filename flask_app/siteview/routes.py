@@ -43,7 +43,7 @@ def search_results(query, query_type):
                 meme_pics.append(meme_pic)
             return render_template('query.html', results=results, meme_pics=meme_pics)
         else: # query_type == users
-            results = User.objects(username=query)
+            results = User.objects(username= {'$regex': query})
             propics = []
             for result in results:
                 propics.append(get_b64_img(result.username))
