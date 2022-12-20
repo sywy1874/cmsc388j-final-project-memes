@@ -69,8 +69,8 @@ b {
 }
 
 .memepic-mini {
-    height: 60px; 
-    width: 60px;
+    height: 100px; 
+    width: 100px;
 }
 
 .user_detail_meme_pic{
@@ -98,5 +98,9 @@ b {
 .ud_item{
     border:  black dashed 2px;
     padding: 20px;
+    margin-bottom: 20px;
+}
+
+.meme_query{
     margin-bottom: 20px;
 }

@@ -4,11 +4,21 @@ current_user.is_authenticated %}
 <div class="row bottom-padded">
   <div class="col userinfodiv">
     {# Profile picture #}
+    {%if image|length < 1 %}
+    <h1 >{{image}}</h1>
+    <img
+      class="propic"
+      src="{{url_for('static', filename='defaultpfp.png')}}"
+      alt="Profile Picture"
+    />
+    {% else %}
     <img
       class="propic"
       src="data:image/png;base64,{{image}}"
       alt="Profile Picture"
     />
+    {% endif %}
+
     <p class="left-padded">{{current_user.username}}</p>
 
     <!--Link to Stats-->

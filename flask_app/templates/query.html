@@ -1,9 +1,10 @@
 {% extends "header.html" %} {% block content %} {% if error_msg %}
 <p>{{ error_msg }}</p>
 {% endif %} {% if results %}
+<h1>Results:</h1>
 <div class="container-fluid">
   {% for i in range(results|length) %}
-  <div class="media">
+  <div class="media meme_query">
     <img class="memepic-mini" src="data:image/png;base64,{{meme_pics[i]}}" />
     <div class="media-body">
       <h5>
@@ -13,6 +14,7 @@
       </h5>
     </div>
   </div>
+  <hr>
   {% endfor %}
 </div>
 {% else %}

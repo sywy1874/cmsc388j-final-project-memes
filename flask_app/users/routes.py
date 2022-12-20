@@ -1,6 +1,8 @@
 from flask import Blueprint, redirect, url_for, render_template, flash, request
 from flask_login import current_user, login_required, login_user, logout_user
 
+#from django.core.files import File
+
 from .. import bcrypt
 from ..forms import (RegistrationForm, LoginForm,
                      UpdateUsernameForm, UpdateEmailForm, UpdatePasswordForm, UpdateProfilePicForm,)
@@ -23,12 +25,13 @@ def register():
     if form.validate_on_submit():
         hashed = bcrypt.generate_password_hash(
             form.password.data).decode("utf-8")
+
         user = User(
             username=form.username.data,
             email=form.email.data,
-            password=hashed
+            password=hashed,
         )
-
+        
         user.save()
 
         return redirect(url_for("users.login"))
@@ -96,6 +99,7 @@ def account():
 
     if update_propic_form.validate_on_submit():
         img = update_propic_form.image.data
+
         filename = secure_filename(img.filename)
         content_type = f'images/{filename[-3:]}'
 
